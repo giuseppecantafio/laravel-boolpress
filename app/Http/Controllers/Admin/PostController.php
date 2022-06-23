@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -27,7 +28,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -41,9 +43,10 @@ class PostController extends Controller
         $data = $request->all();
         $newPost = new Post();
         $newPost->title = $data['title'];
-        $slug = Str::of($data['title'])->slug("-");
         $newPost->content = $data['content'];
         $newPost->published = isset($data['published']);
+        $newPost->category_id = $data['category_id'];
+        $slug = Str::of($data['title'])->slug("-");
         $count = 1;
         while(Post::where('slug', $slug)->first()){
             $slug = Str::of($data['title'])->slug("-") . "-{$count}";
@@ -62,6 +65,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        
         return view('admin.posts.show', compact('post'));
     }
 
@@ -71,9 +75,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        return view('admin.posts.edit');
+        $categories = Category::all();
+        return view('admin.posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -83,10 +88,25 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
-    }
+        $data = $request->all();
+        if($post->title !== $data['title']){
+            $post->title = $data['title'];
+            $slug = Str::of($data['title'])->slug("-");
+            $count = 1;
+            while(Post::where('slug', $slug)->first()){
+                $slug = Str::of($data['title'])->slug("-") . "-{$count}";
+                $count++;
+            }
+            $post->slug = $slug;
+        }
+        $post->content = $data['content'];
+        $post->published = isset($data['published']);
+        $post->category_id = $data['category_id'];
+        $post->update();
+        return redirect()->route('admin.posts.show', $post->id);
+    }   
 
     /**
      * Remove the specified resource from storage.

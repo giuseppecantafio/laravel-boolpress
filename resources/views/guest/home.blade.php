@@ -14,16 +14,16 @@
 
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
+        <div>
             @if (Route::has('login'))
-                <div class="top-right links">
+                <div class="d-flex justify-content-end">
                     @auth
                         <a href="{{ url('admin') }}">Home</a>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('login') }}" class="pr-3">Accedi</a>
 
                         @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
+                            <a href="{{ route('register') }}" class="pr-3">Registrati</a>
                         @endif
                     @endauth
                 </div>

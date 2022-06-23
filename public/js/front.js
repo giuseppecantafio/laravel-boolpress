@@ -1914,6 +1914,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "AppMain",
   data: function data() {
@@ -37570,13 +37571,27 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "text-center" }, [
     _c("h1", [_vm._v(_vm._s(_vm.titolo))]),
     _vm._v(" "),
     _c("h2", [_vm._v(_vm._s(_vm.sottotitolo))]),
+    _vm._v(" "),
+    _vm._m(0),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h6", [
+      _vm._v("Vai ai "),
+      _c("a", { attrs: { href: "http://127.0.0.1:8000/admin/posts" } }, [
+        _vm._v("post"),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -50170,7 +50185,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercizi_php\giugno_mattina\21_giugno\resources\js\front.js */"./resources/js/front.js");
+module.exports = __webpack_require__(/*! C:\MAMP\htdocs\esercizi_php\giugno_mattina\laravel-auth\resources\js\front.js */"./resources/js/front.js");
 
 
 /***/ })

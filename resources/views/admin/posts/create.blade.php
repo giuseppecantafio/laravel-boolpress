@@ -12,6 +12,14 @@
     <label for="content">Content</label>
     <textarea type="content" class="form-control" id="content" placeholder="Enter content" name="content">{{old('content')}}</textarea>
   </div>
+  <div class="form-group">
+    <label for="category">Category</label>
+    <select name="category_id" class="form-control" id="category">
+      @foreach($categories as $category)
+      <option value="{{$category->id}}">{{$category->name}}</option>
+      @endforeach
+    </select>
+  </div>
   <div class="form-check">
       <input type="checkbox" name="published" class="form-check-input" id="published">
       <label class="form-check-label" {{old('published') ? 'checked' : ''}}  for="published">Pubblicato?</label>

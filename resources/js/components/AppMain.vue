@@ -1,7 +1,8 @@
 <template>
-    <div>
+    <div class="text-center">
         <h1>{{ titolo }}</h1>
         <h2>{{ sottotitolo }}</h2>
+        <h6>Vai ai <a href="http://127.0.0.1:8000/admin/posts">post</a></h6>
     </div>
 </template>
 <script>
