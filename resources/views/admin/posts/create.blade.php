@@ -16,9 +16,10 @@
     <label for="content">Content</label>
     <textarea type="content" class="form-control @error('content') is-invalid @enderror" id="content" placeholder="Enter content" name="content">{{old('content')}}</textarea>
      @error('content') 
-    <div class="alert-danger">
-      {{$message}}
-    </div> @enderror
+      <div class="alert-danger">
+        {{$message}}
+      </div>
+    @enderror
   </div>
   <div class="form-group">
     <label for="category">Category</label>

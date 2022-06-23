@@ -10,6 +10,7 @@
       <th scope="col">Title</th>
       <th scope="col">Creation date</th>
       <th scope="col">Edit</th>
+      <th scope="col">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -30,7 +31,16 @@
           {{$post->created_at}}
         </a>
       </td>
-      <td><a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-primary">Edit</a></td>
+      <td>
+          <a href="{{route('admin.posts.edit', $post->id)}}" class="btn btn-primary">Edit</a>
+      </td>
+      <td>
+            <form id="form" action="{{ route('admin.posts.destroy', $post->id) }}" method="POST">
+              @csrf
+              @method('DELETE')
+              <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this item?');">Elimina</button>
+            </form>
+      </td>
     </tr>
     @endforeach
   </tbody>
