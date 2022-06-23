@@ -10,6 +10,13 @@ use App\Category;
 
 class PostController extends Controller
 {
+    protected $validationRule = [
+        'title' => 'required|string|max:110',
+        'content' => 'required',
+        'published' => 'sometimes|accepted',
+        'category_id' => 'nullable|exists:categories,id',
+        'image' => 'nullable|image|mimes:jpeg,bmp,png|max:2048'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -40,6 +47,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->validationRule);
         $data = $request->all();
         $newPost = new Post();
         $newPost->title = $data['title'];
@@ -90,6 +98,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $request->validate($this->validationRule);
         $data = $request->all();
         if($post->title !== $data['title']){
             $post->title = $data['title'];
