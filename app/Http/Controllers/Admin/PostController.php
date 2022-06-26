@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
+use App\Tag;
 
 class PostController extends Controller
 {
@@ -15,7 +16,8 @@ class PostController extends Controller
         'content' => 'required',
         'published' => 'sometimes|accepted',
         'category_id' => 'nullable|exists:categories,id',
-        'image' => 'nullable|image|mimes:jpeg,bmp,png|max:2048'
+        'image' => 'nullable|image|mimes:jpeg,bmp,png|max:2048',
+        'tags' => 'nullable|exists:tags_id'
     ];
     /**
      * Display a listing of the resource.
@@ -24,7 +26,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::paginate(10);
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -36,7 +38,8 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', compact('categories'));
+        $tags = Tag::all();
+        return view('admin.posts.create', compact('categories', 'tags'));
     }
 
     /**
@@ -62,6 +65,9 @@ class PostController extends Controller
         }
         $newPost->slug = $slug;
         $newPost->save();
+        if(isset($data['tags'])){
+            $newPost->tags()->sync($data['tags']);
+        }
         return redirect()->route('admin.posts.show', $newPost->id);
     }
 
@@ -86,7 +92,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
