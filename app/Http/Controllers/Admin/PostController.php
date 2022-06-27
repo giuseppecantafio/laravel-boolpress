@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
@@ -50,6 +51,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        
         $request->validate($this->validationRule);
         $data = $request->all();
         $newPost = new Post();
@@ -121,6 +123,11 @@ class PostController extends Controller
         $post->published = isset($data['published']);
         $post->category_id = $data['category_id'];
         $post->update();
+        if(isset($data['tags'])){
+            $newPost->tags()->sync($data['tags']);
+        } else {
+            $newPost->tags()->sync($data[]);
+        }
         return redirect()->route('admin.posts.show', $post->id);
     }   
 
@@ -132,6 +139,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $post->tags()->sync([]);
         $post->delete();
         return redirect()->route('admin.posts.index');
     }
