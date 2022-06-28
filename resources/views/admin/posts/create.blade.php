@@ -1,5 +1,4 @@
 @extends('layouts.admin')
-@dump($tags)
 @section('content')
     <form action="{{route('admin.posts.store')}}" method="POST">
         @csrf
@@ -43,15 +42,18 @@
   </div>
 
 
-<div class="form-group">
-  <h5>Tags</h5>
-      @foreach($tags as $tag)
-    <div class="form-check-inline">
-      <input type="checkbox" name="tags[]" class="form-check-input" id="{{$tag->slug}}" value="{{$tag->id}}">
-      <label class="form-check-label" {{in_array($tag->id, old("tags", [])) ? 'checked' : ''}} for="{{$tag->slug}}">{{$tag->name}}</label>
-    </div>
-      @endforeach
-  </div>
+ <div class="form-group">
+            <h5>Tags</h5>
+            @foreach ($tags as $tag)
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" {{in_array($tag->id, old("tags", [])) ? 'checked' : ''}} id="{{$tag->slug}}" name="tags[]" value="{{$tag->id}}">
+                    <label class="form-check-label"  for="{{$tag->slug}}">{{$tag->name}}</label>
+                </div>
+            @endforeach
+            @error('tags')
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div>
 
 
   <button type="submit" class="btn btn-primary">Submit</button>
