@@ -9,6 +9,7 @@ import AboutComponent from './pages/AboutComponent';
 import ContactComponent from './pages/ContactComponent';
 import PostsComponent from './pages/PostsComponent';
 import SinglePostComponent from './pages/SinglePostComponent';
+import NotFoundComponent from './pages/NotFoundComponent';
 
 const router = new VueRouter({
     mode: "history",
@@ -38,7 +39,13 @@ const router = new VueRouter({
             name: 'single-post',
             component: SinglePostComponent
         },
+        {
+            path: '*',
+            name: 'page-404',
+            component: NotFoundComponent
+        },
     ]
+
 });
 
 export default router;
