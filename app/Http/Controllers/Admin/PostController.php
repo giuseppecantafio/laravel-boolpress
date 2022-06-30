@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use App\Post;
 use App\Category;
 use App\Tag;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -81,7 +82,10 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        
+        // $currentUser = Auth::user();
+        // if($currentUser->id !== $post->user_id){
+        //     abort(403);
+        // };
         return view('admin.posts.show', compact('post'));
     }
 

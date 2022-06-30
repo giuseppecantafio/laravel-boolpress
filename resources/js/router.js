@@ -10,6 +10,7 @@ import ContactComponent from './pages/ContactComponent';
 import PostsComponent from './pages/PostsComponent';
 import SinglePostComponent from './pages/SinglePostComponent';
 import NotFoundComponent from './pages/NotFoundComponent';
+import CategoryComponent from './pages/CategoryComponent';
 
 const router = new VueRouter({
     mode: "history",
@@ -40,10 +41,16 @@ const router = new VueRouter({
             component: SinglePostComponent
         },
         {
+            path: '/categories/:slug',
+            name: 'categories',
+            component: CategoryComponent
+        },
+        {
             path: '*',
             name: 'page-404',
             component: NotFoundComponent
         },
+
     ]
 
 });
